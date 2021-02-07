@@ -2,21 +2,23 @@ import subprocess
 import csv
 from datetime import datetime
 from time import sleep
+import speedtest
 
 cmd = ['cat', '/proc/net/wireless']
 proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
 o, e = proc.communicate()
+
+st = speedtest.Speedtest()
+
 
 def find(num, string):
     return str(o)[num + (str(o).find(string))]
 
-with open('graph.csv', mode='w') as f:
+with open('wifi.csv', mode='w') as f:
     writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
     writer.writerow(["Link Quality", "Signal Level", "Time Stamp"])
 
-    while True:
+    for i in range(1, 50):
         date = datetime.now()
 
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -28,9 +30,15 @@ with open('graph.csv', mode='w') as f:
         writer.writerow([link_quality, signal_level, date.second])
         print(link_quality, signal_level)
 
+        
+
         sleep(5)
 
+with open('internet.csv', mode='w') as f:
+    writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(["Upload", "Download", "Time Stamp"])
 
+    for i in range(1, 20):
+        date = datetime.now()
 
-
-
+        writer.writerow(st.upload() / 100000, st.download() / 100000, date.second())
