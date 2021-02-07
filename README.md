@@ -9,4 +9,4 @@ This is a small python script that gets link quality and signal level and writes
 
 #### Dependencies
 
-- pyspeedtest (https://pypi.org/project/pyspeedtest/)
+- speedtest-cli (https://www.speedtest.net/apps/cli)
