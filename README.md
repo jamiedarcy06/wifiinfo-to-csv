@@ -9,5 +9,4 @@ This is a small python script that gets link quality and signal level and writes
 
 #### Dependencies
 
-- speedtest-cli
-- ping3
+- pyspeedtest (https://pypi.org/project/pyspeedtest/)
