@@ -3,6 +3,7 @@ import csv
 from datetime import datetime
 from time import sleep
 import speedtest
+import os
 
 cmd = ['cat', '/proc/net/wireless']
 proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -29,8 +30,7 @@ with open('wifi.csv', mode='w') as f:
 
         writer.writerow([link_quality, signal_level, date.second])
         print(link_quality, signal_level)
-
-        
+        print(f"Iteration {i} / 50")
 
         sleep(5)
 
@@ -40,5 +40,12 @@ with open('internet.csv', mode='w') as f:
 
     for i in range(1, 20):
         date = datetime.now()
+        print(f"Iteration {i} / 20")
+        upload, download = st.upload(), st.download()
+        writer.writerow([upload / 100000, download / 1000000, date.second])
 
-        writer.writerow(st.upload() / 100000, st.download() / 100000, date.second())
+os.system("killall -9 wavemon") # May cause problems with the terminal window that wavemon was running in 
+print("*** Finished ***")
+
+
+
