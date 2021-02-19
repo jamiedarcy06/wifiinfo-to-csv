@@ -42,10 +42,7 @@ with open('internet.csv', mode='w') as f:
         date = datetime.now()
         print(f"Iteration {i} / 20")
         upload, download = st.upload(), st.download()
-        writer.writerow([upload / 100000, download / 1000000, date.second])
+        writer.writerow([upload / 1000000, download / 1000000, date.second])
 
 os.system("killall -9 wavemon") # May cause problems with the terminal window that wavemon was running in 
 print("*** Finished ***")
-
-
-
